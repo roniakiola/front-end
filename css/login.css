@@ -1,0 +1,81 @@
+/*
+  MAIN COLORS:
+  
+  background: rgb(255,147,112);
+  background: linear-gradient(90deg, rgba(255,147,112,1) 0%, rgba(60,52,134,1) 71%);
+
+*/
+@import 'style.css';
+
+body{
+  background: rgb(255,147,112);
+  background: linear-gradient(90deg, var(--accent-color-orange) 0%, var(--accent-color-blue) 70%);
+}
+h1, h3{
+  margin-top: 0;
+  color: white;
+}
+main{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+.form-container{
+  width: 50vw;
+  margin-top: 1.5rem;
+  padding: 2rem;
+}
+form{
+  width: 100%;
+}
+.form-container input{
+  text-align: center;
+  width: 100%;
+  min-height: 5vh;
+  border: solid 1px;
+  margin-bottom: 0.3rem;
+}
+.form-buttons{
+  display: flex;
+  justify-content: center;
+  min-height: 5vh;
+}
+.form-buttons > :nth-child(1){
+  margin-right: 0.15rem;
+  color: rgb(255, 255, 255);
+}
+.form-buttons > :nth-child(1):hover{
+  color: #ff9370;
+}
+#register .form-buttons > :nth-child(1):hover{
+  color: red;
+}
+.form-buttons > :nth-child(2){
+  margin-left: 0.15rem;
+  color: greenyellow;
+}
+.form-buttons > :nth-child(2):hover{
+  color: #ff9370;
+}
+.login{
+  display: flex;
+  flex-direction: column;
+}
+.hidden{
+  display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+  h1{
+    font-size: 5em;
+  }
+  h3{
+    font-size: 2em;
+  }
+  .form-container input{
+    max-width: 50%;
+  }
+}
+

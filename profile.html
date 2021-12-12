@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header>
+    <nav id="navbar">
+        <button id="hamburgerMenu">
+          <span class="fas fa-bars"></span>
+        </button>
+        <a id="brand" href="home.html">
+          <h1>MetroLauta</h1>
+        </a>
+        <div class="navbar-right-buttons">
+          <button class="profile-btn">
+            <span class="fas fa-user-circle"></span>
+          </button>
+          <button class="scroll-up-btn">
+            <span class="fas fa-arrow-up"></span>
+          </button>
+        </div>
+    </nav>
+  </header>
+  <!-- NAVBAR END -->
+  <div id="sidebar" class="hidden">
+    <div id="categories">
+      <h3>Categories</h3>
+      <p class="category" data-category="sekalainen">
+        <a href="/sekalainen">Sekalainen</a>
+      </p>
+      <p class="category" data-category="opiskelu">
+        <a href="/opiskelu">Opiskelu</a>
+      </p>
+      <p class="category" data-category="kissat">
+        <a href="/kissat">Kissat</a>
+      </p>
+      <p class="category" data-category="rekry">
+        <a href="/rekry">Rekrytointi</a>
+      </p>
+    </div>
+    <div id="profileNav">
+      <a href="/user">
+        <span class="fas fa-user-circle"></span>
+        <span>My settings</span>
+      </a>
+    </div>
+  </div>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>
