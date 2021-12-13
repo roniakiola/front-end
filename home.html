@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>Sekalainen</title>
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
@@ -13,13 +13,17 @@
   <!-- NAVBAR -->
   <header>
     <nav id="navbar">
+      <div class="left-container">
         <button id="hamburgerMenu">
           <span class="fas fa-bars"></span>
         </button>
-        <a id="brand" href="home.html">
+      </div>
+      <div class="middle-container">
+        <a id="brand" href="sekalainen.html">
           <h1>MetroLauta</h1>
         </a>
-        <div class="navbar-right-buttons">
+      </div>
+        <div class="right-container">
           <button class="profile-btn">
             <span class="fas fa-user-circle"></span>
           </button>
@@ -30,24 +34,22 @@
     </nav>
   </header>
   <!-- NAVBAR END -->
+  <!--Sidebar-->
   <div id="sidebar" class="hidden">
     <div id="categories">
       <h3>Categories</h3>
       <p class="category" data-category="sekalainen">
-        <a href="/sekalainen">Sekalainen</a>
+        <a href="/sekalainen/">Sekalainen</a>
       </p>
       <p class="category" data-category="opiskelu">
-        <a href="/opiskelu">Opiskelu</a>
+        <a href="/opiskelu/">Opiskelu</a>
       </p>
       <p class="category" data-category="kissat">
-        <a href="/kissat">Kissat</a>
-      </p>
-      <p class="category" data-category="rekry">
-        <a href="/rekry">Rekrytointi</a>
+        <a href="/kissat/">Kissat</a>
       </p>
     </div>
     <div id="profileNav">
-      <a href="/user">
+      <a href="/user/">
         <span class="fas fa-user-circle"></span>
         <span>My settings</span>
       </a>
@@ -57,14 +59,38 @@
       </a>
     </div>
   </div>
+  <!--Sidebar End-->
   <main>
     <div id="content">
-      <h1>kakkakikkare tänne tulee threadit lol lol :D</h1>
+      <header>
+        <h1>
+          <a style="color: black;" href="/sekalainen/">Sekalainen</a>
+        </h1>
+        <h2>Sekalaista sisältöä</h2>
+      </header>
+      <form id="postForm" action="http://localhost:3000/sekalainen" method="post">
+        <h3>Create Thread</h3>
+        <input type="hidden" name="owner">
+        <label>
+          <input type="text" name="title" placeholder="Title" maxlength="40" autocomplete="off">
+        </label>
+        <input type="hidden" name="category" value="sekalainen">
+        <input type="hidden" name="thread" value="0">
+        <label>
+          <input type="file" name="img" accept="image/*">
+        </label>
+        <label>
+          <textarea name="content" placeholder="Your message" maxlength="4000"></textarea>
+        </label>
+        <button type="submit">Submit</button>
+
+      </form>
     </div>
   </main>
 
   <script src="js/main.js"></script>
   <script src="js/check-login.js"></script>
   <script src="js/serialize.js"></script>
+  <script src="js/addPost.js"></script>
 </body>
 </html>
