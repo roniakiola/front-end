@@ -30,6 +30,9 @@ const createPostCards = (posts) => {
 
   posts.forEach((post) => {
     // create li with DOM methods
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
+
     const img = document.createElement('img');
     img.src = url + '/thumbnails/' + post.img;
     img.alt = post.title;
@@ -41,18 +44,25 @@ const createPostCards = (posts) => {
     });
 
     const figure = document.createElement('figure').appendChild(img);
+    imgContainer.appendChild(figure);
 
-    const h2 = document.createElement('h2');
-    h2.innerHTML = post.title;
+    const title = document.createElement('h2');
+    title.classList.add('thread-title');
+    title.innerHTML = post.title;
 
-    const p1 = document.createElement('p');
-    p1.innerHTML = `Created: ${post.created}`;
+    const postedBy = document.createElement('p');
+    postedBy.innerHTML = `Owner: ${post.ownername}`;
 
-    const p2 = document.createElement('p');
-    p2.innerHTML = post.content;
+    const postCreated = document.createElement('p');
+    postCreated.innerHTML = `Created: ${post.created}`;
 
-    const p3 = document.createElement('p');
-    p3.innerHTML = `Owner: ${post.owner}`;
+    const postInfoContainer = document.createElement('div');
+    postInfoContainer.classList.add('post-info-container');
+    postInfoContainer.appendChild(postedBy);
+    postInfoContainer.appendChild(postCreated);
+
+    const textContent = document.createElement('p');
+    textContent.innerHTML = post.content;
 
     const thread = document.createElement('div');
     thread.classList.add('thread');
@@ -64,12 +74,12 @@ const createPostCards = (posts) => {
       thread.classList.add('hidden');
     }
 
-    thread.appendChild(h2);
-    thread.appendChild(figure);
-    thread.appendChild(p1);
-    thread.appendChild(p2);
-    thread.appendChild(p3);
+    thread.appendChild(title);
+    thread.appendChild(postInfoContainer);
+    thread.appendChild(imgContainer);
+    thread.appendChild(textContent);
     threadContainer.appendChild(thread);
+
     if (user.role === 1 || user.id === post.owner) {
       // link to modify form
       const modButton = document.createElement('a');
