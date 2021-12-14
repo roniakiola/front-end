@@ -65,30 +65,32 @@
   <!--Sidebar End-->
   <main>
     <div id="content">
-      <header>
-        <h1>
-          <a style="color: black;" href="/sekalainen/">Sekalainen</a>
-        </h1>
-        <h2>Sekalaista sisältöä</h2>
-      </header>
-      <form id="postForm" action="http://localhost:3000/post" method="post" enctype="multipart/form-data">
-        <h3>Create Thread</h3>
-        <!-- <input type="hidden" name="owner" value="1"> -->
-        <label>
-          <input type="text" name="title" placeholder="Title" maxlength="40" autocomplete="off">
-        </label>
-        <input type="hidden" name="category" id="kategoria">
-        <!-- <input type="hidden" name="parent"> -->
-        <label>
-          <input type="file" name="img" accept="image/*">
-        </label>
-        <label>
-          <textarea name="content" placeholder="Your message" maxlength="4000"></textarea>
-        </label>
-        <button type="submit">Submit</button>
+      <section id="form-section">
+        <header>
+          <h1>
+            <a style="color: black;" href="/sekalainen/">Sekalainen</a>
+          </h1>
+          <h2>Sekalaista sisältöä</h2>
+        </header>
+        <form id="postForm" action="http://localhost:3000/post" method="post" enctype="multipart/form-data">
+          <h3>Create Thread</h3>
+          <!-- <input type="hidden" name="owner" value="1"> -->
+          <label>
+            <input type="text" name="title" placeholder="Title" maxlength="40" autocomplete="off">
+          </label>
+          <input type="hidden" name="category" id="kategoria">
+          <!-- <input type="hidden" name="parent"> -->
+          <label>
+            <input type="file" name="img" accept="image/*">
+          </label>
+          <label>
+            <textarea name="content" placeholder="Your message" maxlength="4000"></textarea>
+          </label>
+          <button type="submit">Submit</button>
 
-      </form>
-      <section>
+        </form>
+      </section>
+      <section id="threads">
         <div id="thread-container">
 
         </div>
