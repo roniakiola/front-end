@@ -1,6 +1,6 @@
 'use strict';
 //testinä vanha back-end
-const url = 'http://10.114.34.26/app';
+const url = 'http://localhost:3000';
 
 //Adding event listeners to forms after html has loaded
 document.addEventListener('DOMContentLoaded', () => {

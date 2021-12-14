@@ -68,14 +68,14 @@
         </h1>
         <h2>Sekalaista sisältöä</h2>
       </header>
-      <form id="postForm" action="http://localhost:3000/sekalainen" method="post">
+      <form id="postForm" action="http://localhost:3000/post" method="post" enctype="multipart/form-data">
         <h3>Create Thread</h3>
-        <input type="hidden" name="owner">
+        <input type="hidden" name="owner" value="1">
         <label>
           <input type="text" name="title" placeholder="Title" maxlength="40" autocomplete="off">
         </label>
         <input type="hidden" name="category" value="sekalainen">
-        <input type="hidden" name="thread" value="0">
+        <input type="hidden" name="parent" value="">
         <label>
           <input type="file" name="img" accept="image/*">
         </label>
