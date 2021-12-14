@@ -1,6 +1,5 @@
 "use strict";
 // const url = 'http://10.114.34.26/app'; // change url when uploading to server
-const url = "http://localhost:3000";
 
 // get query parameter
 const getQParam = (param) => {

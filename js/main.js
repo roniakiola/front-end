@@ -1,5 +1,7 @@
 'use strict';
 
+const url = "http://localhost:3000";
+
 const collapseMenu = document.querySelector('#sidebar');
 const content = document.querySelector('#content');
 
@@ -23,7 +25,9 @@ const user = JSON.parse(sessionStorage.getItem('user'));
 const createPostCards = (posts) => {
 
   // clear ul
-  ul.innerHTML = '';
+  const threadContainer = document.getElementById('thread-container');
+  threadContainer.innerHTML = '';
+
   posts.forEach((post) => {
     // create li with DOM methods
     const img = document.createElement('img');
@@ -50,15 +54,22 @@ const createPostCards = (posts) => {
     const p3 = document.createElement('p');
     p3.innerHTML = `Owner: ${post.owner}`;
 
-    const li = document.createElement('li');
-    li.classList.add('light-border');
+    const thread = document.createElement('div');
+    thread.classList.add('thread');
 
-    li.appendChild(h2);
-    li.appendChild(figure);
-    li.appendChild(p1);
-    li.appendChild(p2);
-    li.appendChild(p3);
-    ul.appendChild(li);
+    const threadValue = thread.value = post.category;
+
+    if (!(threadValue == categoryId)) {
+      console.log(categoryId);
+      thread.classList.add('hidden');
+    }
+
+    thread.appendChild(h2);
+    thread.appendChild(figure);
+    thread.appendChild(p1);
+    thread.appendChild(p2);
+    thread.appendChild(p3);
+    threadContainer.appendChild(thread);
     if (user.role === 1 || user.id === post.owner) {
       // link to modify form
       const modButton = document.createElement('a');
@@ -90,8 +101,8 @@ const createPostCards = (posts) => {
         }
       });
 
-      li.appendChild(modButton);
-      li.appendChild(delButton);
+      thread.appendChild(modButton);
+      thread.appendChild(delButton);
     }
   });
 };
@@ -104,7 +115,6 @@ const getPost = async () => {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const url = "http://localhost:3000";
     const response = await fetch(url + '/post', fetchOptions);
     const posts = await response.json();
     createPostCards(posts);

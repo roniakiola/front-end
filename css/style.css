@@ -29,6 +29,18 @@ button{
   border: solid 1px;
   cursor: pointer;
 }
+#thread-container{
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 5px;
+}
+.thread{
+  display: flex;
+  flex-direction: column;
+  border: solid 1px;
+  border-radius: 0px;
+}
 #navbar{
   display: flex;
   justify-content: space-between;
@@ -143,6 +155,9 @@ main header{
 #postForm textarea{
   min-height: 150px;
   resize: vertical;
+}
+.hidden{
+  display: none;
 }
 
 
