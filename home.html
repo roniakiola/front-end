@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sekalainen</title>
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <!-- NAVBAR -->
   <header>
@@ -23,14 +26,14 @@
           <h1>MetroLauta</h1>
         </a>
       </div>
-        <div class="right-container">
-          <button class="profile-btn">
-            <span class="fas fa-user-circle"></span>
-          </button>
-          <button class="scroll-up-btn">
-            <span class="fas fa-arrow-up"></span>
-          </button>
-        </div>
+      <div class="right-container">
+        <button class="profile-btn">
+          <span class="fas fa-user-circle"></span>
+        </button>
+        <button class="scroll-up-btn">
+          <span class="fas fa-arrow-up"></span>
+        </button>
+      </div>
     </nav>
   </header>
   <!-- NAVBAR END -->
@@ -39,13 +42,13 @@
     <div id="categories">
       <h3>Categories</h3>
       <p class="category" data-category="sekalainen">
-        <a href="/sekalainen/">Sekalainen</a>
+        <a href="?kategoria=5">Sekalainen</a>
       </p>
       <p class="category" data-category="opiskelu">
-        <a href="/opiskelu/">Opiskelu</a>
+        <a href="?kategoria=6">Opiskelu</a>
       </p>
       <p class="category" data-category="kissat">
-        <a href="/kissat/">Kissat</a>
+        <a href="?kategoria=7">Kissat</a>
       </p>
     </div>
     <div id="profileNav">
@@ -70,12 +73,12 @@
       </header>
       <form id="postForm" action="http://localhost:3000/post" method="post" enctype="multipart/form-data">
         <h3>Create Thread</h3>
-        <input type="hidden" name="owner" value="1">
+        <!-- <input type="hidden" name="owner" value="1"> -->
         <label>
           <input type="text" name="title" placeholder="Title" maxlength="40" autocomplete="off">
         </label>
-        <input type="hidden" name="category" value="sekalainen">
-        <input type="hidden" name="parent" value="">
+        <input type="hidden" name="category" id="kategoria">
+        <!-- <input type="hidden" name="parent"> -->
         <label>
           <input type="file" name="img" accept="image/*">
         </label>
@@ -86,11 +89,15 @@
 
       </form>
     </div>
+    <ul id="list">
+      <!-- js creates list here -->
+    </ul>
   </main>
 
-  <script src="js/main.js"></script>
   <script src="js/check-login.js"></script>
   <script src="js/serialize.js"></script>
+  <script src="js/main.js"></script>
   <script src="js/addPost.js"></script>
 </body>
+
 </html>
