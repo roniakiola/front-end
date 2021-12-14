@@ -67,6 +67,11 @@ const createPostCards = (posts) => {
     const thread = document.createElement('div');
     thread.classList.add('thread');
 
+    const threadLink = document.createElement('a');
+    threadLink.setAttribute('href', '?kategoria=5');
+    threadLink.classList.add('thread-link');
+
+
     const threadValue = thread.value = post.category;
 
     if (!(threadValue == categoryId)) {
@@ -74,7 +79,8 @@ const createPostCards = (posts) => {
       thread.classList.add('hidden');
     }
 
-    thread.appendChild(title);
+    threadLink.appendChild(title);
+    thread.appendChild(threadLink);
     thread.appendChild(postInfoContainer);
     thread.appendChild(imgContainer);
     thread.appendChild(textContent);
