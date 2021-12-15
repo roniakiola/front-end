@@ -27,6 +27,8 @@ const getIDParam = (param) => {
 
 // get id from address <a href="?kategoria=1">Testi</a>
 const categoryToken = getIDParam("kategoria");
+const postToken = getIDParam('post');
+console.log(getIDParam('post'));
 
 // create post cards
 const createPostCards = (posts) => {
@@ -81,7 +83,9 @@ const createPostCards = (posts) => {
     threadLink.appendChild(title);
     thread.appendChild(threadLink);
     thread.appendChild(postInfoContainer);
-    thread.appendChild(imgContainer);
+    if (post.img) {
+      thread.appendChild(imgContainer);
+    };
     thread.appendChild(textContent);
     threadContainer.appendChild(thread);
 
@@ -121,22 +125,50 @@ const createPostCards = (posts) => {
     }
   });
 };
+if (!postToken) {
+  const getPost = async (id) => {
+    try {
+      const fetchOptions = {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      };
+      const response = await fetch(url + '/post/' + id, fetchOptions);
+      const posts = await response.json();
+      createPostCards(posts);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
-const getPost = async (id) => {
-  try {
-    const fetchOptions = {
-      headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-      },
-    };
-    const response = await fetch(url + '/post/' + id, fetchOptions);
-    const posts = await response.json();
-    createPostCards(posts);
-  } catch (e) {
-    console.log(e.message);
-  }
+  getPost(categoryToken);
+} else {
+
+  const getReplies = async (id, postid) => {
+    try {
+      const fetchOptions = {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      };
+      const response = await fetch(url + '/post/' + id + '/' + postid, fetchOptions);
+      const posts = await response.json();
+      createPostCards(posts);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+  const removeFormTitle = document.querySelector('input[type=text]');
+  removeFormTitle.removeAttribute('type');
+  removeFormTitle.setAttribute('type', 'hidden');
+
+  const addParentForm = document.querySelector('input[name=parent]');
+  addParentForm.setAttribute('value', postToken);
+
+  getReplies(categoryToken, postToken)
+
+
 };
-getPost(categoryToken);
 
 const categoryList = document.querySelector('#categories');
 
