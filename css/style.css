@@ -97,7 +97,8 @@ ul{
   padding: 1em 0;
 }
 #profileNav a{
-  margin-top: 1em;
+  margin: 1em 0;
+  font-size: 1.5em;
   color: black;
 }
 #profileNav a:nth-child(2){
@@ -196,7 +197,7 @@ main header{
     display: inline;
   }
   #sidebar h3{
-    font-size: 2em;
+    font-size: 1.5em;
     padding-left: 0.5em;
   }
   #sidebar a{

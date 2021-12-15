@@ -28,7 +28,6 @@ const getIDParam = (param) => {
 // get id from address <a href="?kategoria=1">Testi</a>
 const categoryToken = getIDParam("kategoria");
 const postToken = getIDParam('post');
-console.log(getIDParam('post'));
 
 // create post cards
 const createPostCards = (posts) => {
@@ -142,6 +141,7 @@ if (!postToken) {
   };
 
   getPost(categoryToken);
+
 } else {
 
   const getReplies = async (id, postid) => {
