@@ -15,10 +15,18 @@ document.querySelector('#hamburgerMenu').addEventListener('click', () => {
   }
 });
 
-
-
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
+
+//fetch param from URL kategoria=?
+const getIDParam = (param) => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+};
+
+// get id from address <a href="?kategoria=1">Testi</a>
+const categoryToken = getIDParam("kategoria");
 
 // create post cards
 const createPostCards = (posts) => {
@@ -39,7 +47,7 @@ const createPostCards = (posts) => {
 
     // open image in single.html
     img.addEventListener('click', () => {
-      location.href = 'single.html?id=' + post.id;
+      location.href = `?kategoria=${categoryToken}&post=${post.id}`;
     });
 
     const figure = document.createElement('figure').appendChild(img);
@@ -67,7 +75,7 @@ const createPostCards = (posts) => {
     thread.classList.add('thread');
 
     const threadLink = document.createElement('a');
-    threadLink.setAttribute('href', '?kategoria=5');
+    threadLink.setAttribute('href', `?kategoria=${categoryToken}&post=${post.id}`);
     threadLink.classList.add('thread-link');
 
     threadLink.appendChild(title);
@@ -114,30 +122,6 @@ const createPostCards = (posts) => {
   });
 };
 
-const getIDParam = (param) => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(param);
-};
-
-// get id from address <a href="?kategoria=1">Testi</a>
-const categoryToken = getIDParam("kategoria");
-
-const createCategory = (category) => {
-
-  const mainTitle = document.createElement('h1');
-  mainTitle.innerHTML = category.name;
-
-  const description = document.createElement('h2');
-  description.innerHTML = category.description;
-
-  const header = document.getElementById('content-header');
-  header.appendChild(mainTitle);
-  header.appendChild(description);
-
-};
-
-// AJAX call
 const getPost = async (id) => {
   try {
     const fetchOptions = {
@@ -152,20 +136,54 @@ const getPost = async (id) => {
     console.log(e.message);
   }
 };
+getPost(categoryToken);
 
-const getCategory = async (id) => {
+const categoryList = document.querySelector('#categories');
+
+const createCategoryLinks = (categories) => {
+  categoryList.innerHTML = '';
+
+  categories.forEach((category) => {
+    const sidebarCat = document.createElement('h3');
+    sidebarCat.innerHTML = category.name;
+    sidebarCat.classList.add('category-name');
+
+    sidebarCat.addEventListener('click', () => {
+      location.href = 'home.html?kategoria=' + category.id;
+    });
+
+    const catLink = document.createElement('a');
+    catLink.classList.add('category-link');
+
+    catLink.appendChild(sidebarCat);
+    categoryList.appendChild(catLink);
+
+    if (categoryToken == category.id) {
+      const mainTitle = document.createElement('h1');
+      mainTitle.innerHTML = category.name;
+
+      const description = document.createElement('h2');
+      description.innerHTML = category.description;
+
+      const header = document.getElementById('content-header');
+      header.appendChild(mainTitle);
+      header.appendChild(description);
+    }
+  });
+};
+
+const getCategory = async () => {
   try {
     const fetchOptions = {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/category/' + id, fetchOptions);
-    const category = await response.json();
-    createCategory(category);
+    const response = await fetch(url + '/category', fetchOptions);
+    const categories = await response.json();
+    createCategoryLinks(categories);
   } catch (e) {
     console.log(e.message);
   }
 };
-getPost(categoryToken);
-getCategory(categoryToken);
+getCategory();

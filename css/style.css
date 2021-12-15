@@ -29,6 +29,9 @@ button{
   border: solid 1px;
   cursor: pointer;
 }
+ul{
+  padding: 0;
+}
 #navbar{
   display: flex;
   justify-content: space-between;
