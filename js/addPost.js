@@ -27,7 +27,7 @@ addForm.addEventListener("submit", async (evt) => {
     },
     body: fd,
   };
-  const response = await fetch(url + "/post", fetchOptions);
+  const response = await fetch(url + "/post/" + categoryId, fetchOptions);
   const json = await response.json();
   alert(json.message);
   location.href = "home.html?kategoria=" + categoryId;

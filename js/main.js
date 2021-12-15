@@ -15,8 +15,7 @@ document.querySelector('#hamburgerMenu').addEventListener('click', () => {
   }
 });
 
-// select existing html elements
-const ul = document.querySelector('#list');
+
 
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -71,14 +70,6 @@ const createPostCards = (posts) => {
     threadLink.setAttribute('href', '?kategoria=5');
     threadLink.classList.add('thread-link');
 
-
-    const threadValue = thread.value = post.category;
-
-    if (!(threadValue == categoryId)) {
-      console.log(categoryId);
-      thread.classList.add('hidden');
-    }
-
     threadLink.appendChild(title);
     thread.appendChild(threadLink);
     thread.appendChild(postInfoContainer);
@@ -123,19 +114,58 @@ const createPostCards = (posts) => {
   });
 };
 
+const getIDParam = (param) => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+};
+
+// get id from address <a href="?kategoria=1">Testi</a>
+const categoryToken = getIDParam("kategoria");
+
+const createCategory = (category) => {
+
+  const mainTitle = document.createElement('h1');
+  mainTitle.innerHTML = category.name;
+
+  const description = document.createElement('h2');
+  description.innerHTML = category.description;
+
+  const header = document.getElementById('content-header');
+  header.appendChild(mainTitle);
+  header.appendChild(description);
+
+};
+
 // AJAX call
-const getPost = async () => {
+const getPost = async (id) => {
   try {
     const fetchOptions = {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token'),
       },
     };
-    const response = await fetch(url + '/post', fetchOptions);
+    const response = await fetch(url + '/post/' + id, fetchOptions);
     const posts = await response.json();
     createPostCards(posts);
   } catch (e) {
     console.log(e.message);
   }
 };
-getPost();
+
+const getCategory = async (id) => {
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/category/' + id, fetchOptions);
+    const category = await response.json();
+    createCategory(category);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+getPost(categoryToken);
+getCategory(categoryToken);
