@@ -5,7 +5,7 @@ const url = 'http://localhost:3000';
 //Adding event listeners to forms after html has loaded
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('#login-form');
-  const registerForm = document.querySelector('#register-form')
+  const registerForm = document.querySelector('#register-form');
 
   document.querySelector('#create-account-btn').addEventListener('click', () => {
     loginForm.classList.add('hidden');
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       body: JSON.stringify(data),
     };
-  
+
     const response = await fetch(url + '/auth/login', fetchOptions);
     const json = await response.json();
     console.log('login response', json);
@@ -37,16 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // save token
       sessionStorage.setItem('token', json.token);
       sessionStorage.setItem('user', JSON.stringify(json.user));
-      location.href = 'home.html';
+      location.href = 'home.html?kategoria=5';
     }
   });
-  
+
   // submit register form
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     let pass1 = document.getElementById('pass1').value;
     let pass2 = document.getElementById('pass2').value;
-    if(pass1 !== pass2) {
+    if (pass1 !== pass2) {
       alert('Passwords did not match');
     } else {
       const data = serializeJson(registerForm);
@@ -62,6 +62,4 @@ document.addEventListener('DOMContentLoaded', () => {
       alert(json.message);
     }
   });
-  
 });
-

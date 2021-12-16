@@ -14,9 +14,9 @@ document.querySelector('#hamburgerMenu').addEventListener('click', () => {
     content.classList.remove('extra-margin');
   }
 });
-
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
+const userID = user.id;
 
 //Create link to user profile
 const MyProfileNav = document.querySelector('#profileButton');
@@ -24,6 +24,7 @@ const MyProfileNav = document.querySelector('#profileButton');
 MyProfileNav.addEventListener('click', () => {
   location.href = 'profile.html?user=' + user.id;
 });
+
 const MyProfileBtn = document.querySelector('.profile-btn');
 
 MyProfileBtn.addEventListener('click', () => {
@@ -37,13 +38,59 @@ const getIDParam = (param) => {
   return urlParams.get(param);
 };
 
-// get id from address <a href="?kategoria=1">Testi</a>
-const categoryToken = getIDParam('kategoria');
-const postToken = getIDParam('post');
+//Create profile page
+const createProfile = () => {
+  const profileContainer = document.getElementById('content');
+  //   profileContainer.innerHTML = '';
 
-// create post cards
+  const profileDiv = document.createElement('div');
+  profileDiv.classList.add('profileContainer');
+
+  const image = document.createElement('img');
+  image.src = url + '/thumbnails/' + user.img;
+  //   image.alt = user.username;
+  image.classList.add('profilePicture');
+  const figure = document.createElement('figure').appendChild(image);
+  if (user.img) {
+    profileDiv.appendChild(figure);
+  }
+
+  const username = document.createElement('h2');
+  username.innerHTML = user.username;
+
+  const email = document.createElement('h2');
+  email.innerHTML = user.email;
+
+  const created = document.createElement('h2');
+  created.innerHTML = user.created;
+
+  profileDiv.appendChild(username);
+  profileDiv.appendChild(email);
+  profileDiv.appendChild(created);
+
+  profileContainer.appendChild(profileDiv);
+};
+// createProfile();
+const getProfile = async () => {
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/user/' + user.id, fetchOptions);
+    const userInfo = await response.json();
+    createProfile(userInfo);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+getProfile();
+
+// get id from address <a href="?user=1">Testi</a>
+const categoryToken = getIDParam('user');
+
 const createPostCards = (posts) => {
-
   // clear ul
   const threadContainer = document.getElementById('thread-container');
   threadContainer.innerHTML = '';
@@ -59,19 +106,9 @@ const createPostCards = (posts) => {
     img.classList.add('resp');
 
     // open image in single.html
-    if (!postToken) {
-      img.addEventListener('click', () => {
-        location.href = `?kategoria=${categoryToken}&post=${post.id}`;
-      });
-    } else {
-      img.addEventListener('click', () => {
-        if (img.src == url + '/thumbnails/' + post.img) {
-          img.src = url + '/' + post.img;
-        } else {
-          img.src = url + '/thumbnails/' + post.img
-        }
-      });
-    }
+    img.addEventListener('click', () => {
+      location.href = `?kategoria=${categoryToken}&post=${post.id}`;
+    });
 
     const figure = document.createElement('figure').appendChild(img);
     imgContainer.appendChild(figure);
@@ -81,10 +118,10 @@ const createPostCards = (posts) => {
     title.innerHTML = post.title;
 
     const postedBy = document.createElement('p');
-    postedBy.innerHTML = `Posted by user: ${post.ownername}`;
+    postedBy.innerHTML = `Owner: ${post.ownername}`;
 
     const postCreated = document.createElement('p');
-    postCreated.innerHTML = `Posted: ${post.created}`;
+    postCreated.innerHTML = `Created: ${post.created}`;
 
     const postInfoContainer = document.createElement('div');
     postInfoContainer.classList.add('post-info-container');
@@ -94,42 +131,26 @@ const createPostCards = (posts) => {
     const textContent = document.createElement('p');
     textContent.innerHTML = post.content;
 
-    const threadMessage = document.createElement('div');
-    threadMessage.classList.add('thread-message');
-    threadMessage.appendChild(textContent);
-
     const thread = document.createElement('div');
     thread.classList.add('thread');
 
     const threadLink = document.createElement('a');
-    threadLink.setAttribute('href', `?kategoria=${categoryToken}&post=${post.id}`);
-
+    threadLink.setAttribute(
+      'href',
+      `home.html?kategoria=${post.category}&post=${post.id}`
+    );
     threadLink.classList.add('thread-link');
 
     threadLink.appendChild(title);
-    if (post.title) {
-      thread.appendChild(threadLink);
-    };
-
-    const postContent = document.createElement('div');
-    postContent.classList.add('post-content');
-    if (post.img) {
-      postContent.appendChild(imgContainer);
-    };
-    postContent.appendChild(threadMessage);
-
+    thread.appendChild(threadLink);
     thread.appendChild(postInfoContainer);
-    thread.appendChild(postContent);
+    thread.appendChild(imgContainer);
+    thread.appendChild(textContent);
     threadContainer.appendChild(thread);
-
-    if (postToken) {
-      threadContainer.removeAttribute('id', 'thread-container');
-      threadContainer.setAttribute('id', 'reply-container');
-    }
 
     if (user.role === 1 || user.id === post.owner) {
       // link to modify form
-      const modButton = document.createElement('button');
+      const modButton = document.createElement('a');
       modButton.innerHTML = 'Modify';
       modButton.href = `modify-post.html?id=${post.id}`;
       modButton.classList.add('button');
@@ -146,70 +167,33 @@ const createPostCards = (posts) => {
           },
         };
         try {
-          const response = await fetch(
-            url + '/post/' + post.id,
-            fetchOptions
-          );
+          const response = await fetch(url + '/post/' + post.id, fetchOptions);
           const json = await response.json();
           console.log('delete response', json);
           getPost();
         } catch (e) {
           console.log(e.message);
         }
-        location.href = ' ';
       });
 
-      const buttonContainer = document.createElement('div');
-      buttonContainer.classList.add('button-container');
-
-      buttonContainer.appendChild(modButton);
-      buttonContainer.appendChild(delButton);
-
-      thread.appendChild(buttonContainer);
+      thread.appendChild(modButton);
+      thread.appendChild(delButton);
     }
   });
 };
-if (!postToken) {
-  const getPost = async (id) => {
-    try {
-      const fetchOptions = {
-        headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-        },
-      };
-      const response = await fetch(url + '/post/' + id, fetchOptions);
-      const posts = await response.json();
-      createPostCards(posts);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
 
-  getPost(categoryToken);
-
-} else {
-
-  const getReplies = async (id, postid) => {
-    try {
-      const fetchOptions = {
-        headers: {
-          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-        },
-      };
-      const response = await fetch(url + '/post/' + id + '/' + postid, fetchOptions);
-
-      const posts = await response.json();
-      createPostCards(posts);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-  const removeFormTitle = document.querySelector('input[type=text]');
-  removeFormTitle.removeAttribute('type');
-  removeFormTitle.setAttribute('type', 'hidden');
-
-  const addParentForm = document.querySelector('input[name=parent]');
-  addParentForm.setAttribute('value', postToken);
-
-  getReplies(categoryToken, postToken);
+const getPost = async (id) => {
+  try {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+      },
+    };
+    const response = await fetch(url + '/user/' + id, fetchOptions);
+    const posts = await response.json();
+    createPostCards(posts);
+  } catch (e) {
+    console.log(e.message);
+  }
 };
+getPost(userID);
