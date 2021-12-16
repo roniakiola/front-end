@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://localhost:3000';
+const url = 'http://10.114.34.26/app2';
 
 const collapseMenu = document.querySelector('#sidebar');
 const content = document.querySelector('#content');
