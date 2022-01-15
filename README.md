@@ -25,8 +25,6 @@ Technologies used:
 <ul>
   <li>MariaDB/MySQL</li>
   <li>Postman</li>
-  <li>Various node modules</li>
-  <li>npm</li>
   <li></li>
   </ul>
   
